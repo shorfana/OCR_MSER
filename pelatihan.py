@@ -1,29 +1,30 @@
-import os
-import sys
 import cv2
 import numpy as np
-
-from PIL import Image
-
-"""
-    This is a simple example on how to use OpenCV for MSER
-"""
-
-def mser(cv_image):
-    vis = cv_image.copy()
-    mser = cv2.MSER_create()
-    regions, _ = mser.detectRegions(cv_image)
-    for p in regions:
-        xmax, ymax = np.amax(p, axis=0)
-        xmin, ymin = np.amin(p, axis=0)
-        cv2.rectangle(vis, (xmin,ymax), (xmax,ymin), (0, 255, 0), 1)
-    return vis
-
-def main(argv):
-    file_path = argv[1]
-    save_path = argv[2]
-
-    cv2.imwrite(save_path, mser(cv2.imread(file_path, 0)))
-
-if __name__=='__main__':
-    main(sys.argv)
+import skimage.io as io
+import matplotlib.pyplot as plt
+filename="/zdata_uji/sertifikatuji"
+str=filename+"/*.jpg"
+mat=io.ImageCollection(str)
+img=mat[0]
+ ##Create an MSER detector and detect the MSER area of ​​the image
+ ##kpkp save the detected keypoint
+mser=cv2.MSER_create()
+regions,boxes=mser.detectRegions(img)
+kpkp=mser.detect(img)
+print (len(mser.detect(img)))
+ ##Use the red box to frame the detected MSER areas, boxes save the coordinates of the upper left corner of these areas and the width and height of the area
+for i in range(len(boxes)):
+    x,y,w,h=boxes[i]
+    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+ #Create a SIFT feature extractor
+siftt=cv2.xfeatures2d.SIFT_create()
+ 
+print(len(regions))
+print(len(boxes))
+kp=siftt.detect(img,None)
+ ##Calculate the local descriptor of kpkp
+des=siftt.compute(img,kpkp)
+print(len(des[0]))
+ ##Draw these keypoints on the image
+cv2.drawKeypoints(img,kpkp,mat[0])
+plt.imshow(mat[0])

@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-import pelatihan
-import pengujian
-import preprocessing
+import GUIpelatihan
+import GUIpengujian
+import GUIpreprocessing
 
 class Ui_OCR_Sertifikat(object):
     def setupUi(self, OCR_Sertifikat):
@@ -49,21 +49,21 @@ class Ui_OCR_Sertifikat(object):
 
     def launchPelatihan(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = pelatihan.Ui_Dialog()
+        self.ui = GUIpelatihan.Ui_Dialog()
         self.ui.setupUi(self.window)
         self.window.setWindowFlags(QtCore.Qt.WindowMinimizeButtonHint | QtCore.Qt.WindowCloseButtonHint)
         self.window.show()
 
     def launchPengujian(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = pelatihan.Ui_Dialog()
+        self.ui = GUIpengujian.Ui_Dialog()
         self.ui.setupUi(self.window)
         self.window.setWindowFlags(QtCore.Qt.WindowMinimizeButtonHint | QtCore.Qt.WindowCloseButtonHint)
         self.window.show()
 
     def launchPreprocessing(self):
         self.window = QtWidgets.QMainWindow()
-        self.ui = preprocessing.Ui_Dialog()
+        self.ui = GUIpreprocessing.Ui_Dialog()
         self.ui.setupUi(self.window)
         self.window.setWindowFlags(QtCore.Qt.WindowMinimizeButtonHint | QtCore.Qt.WindowCloseButtonHint)
         self.window.show()    
